@@ -43,7 +43,7 @@ import java.awt.*;
 public class Tank {
     private int x, y;
     private Dir dir = Dir.DOWN;
-    public static final int SPEED = 10;
+    public static final int SPEED = 5;
     private boolean moving = false;
 
     public Tank(int x, int y, Dir dir) {
