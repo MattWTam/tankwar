@@ -34,11 +34,14 @@ package com.cl.tankwar;
 
 import com.sun.org.apache.bcel.internal.util.BCELifier;
 
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * @Author: Matt Ten
@@ -46,10 +49,11 @@ import java.awt.event.WindowEvent;
  * @Description: com.cl.tankwar
  * @Version: 1.0
  */
-public class TankFrame extends Frame{
+public class TankFrame extends Frame {
     Tank myTank = new Tank(200, 200, Dir.DOWN, this);
-    Bullet b = new Bullet(300,300, Dir.DOWN);
-    private static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+    List<Bullet> bullets = new ArrayList<Bullet>();
+    Bullet b = new Bullet(300,300, Dir.DOWN, this);
+    static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
     public TankFrame() {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -85,8 +89,9 @@ public class TankFrame extends Frame{
     @Override
     public void paint(Graphics g) {
         myTank.paint(g);
-        b.paint(g);
-
+        for (int i = 0; i < bullets.size(); i++) {
+            bullets.get(i).paint(g);
+        }
     }
 
     class MyKeyListener extends KeyAdapter {
