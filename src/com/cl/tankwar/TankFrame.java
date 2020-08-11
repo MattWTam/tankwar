@@ -32,6 +32,8 @@
 
 package com.cl.tankwar;
 
+import com.sun.org.apache.bcel.internal.util.BCELifier;
+
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
@@ -45,7 +47,7 @@ import java.awt.event.WindowEvent;
  * @Version: 1.0
  */
 public class TankFrame extends Frame{
-    Tank myTank = new Tank(200, 200, Dir.DOWN);
+    Tank myTank = new Tank(200, 200, Dir.DOWN, this);
     Bullet b = new Bullet(300,300, Dir.DOWN);
     private static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
@@ -129,6 +131,9 @@ public class TankFrame extends Frame{
                     break;
                 case KeyEvent.VK_DOWN :
                     bD = false;
+                    break;
+                case KeyEvent.VK_CONTROL:
+                    myTank.fire();
                     break;
                 default:
                     break;

@@ -45,11 +45,13 @@ public class Tank {
     private Dir dir = Dir.DOWN;
     public static final int SPEED = 5;
     private boolean moving = false;
+    private TankFrame tf = null;
 
-    public Tank(int x, int y, Dir dir) {
+    public Tank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.tf = tf;
     }
 
     public boolean isMoving() {
@@ -72,7 +74,7 @@ public class Tank {
         Color c = g.getColor();
         g.setColor(Color.YELLOW);
         g.fillRect(x, y,50, 50);
-        g.setColor(c);
+        g.setColor(c); 
         move();
 
     }
@@ -95,5 +97,9 @@ public class Tank {
             default:
                 break;
         }
+    }
+
+    public void fire() {
+        tf.b = new Bullet(this.x,this.y, this.dir);
     }
 }
