@@ -92,6 +92,13 @@ public class TankFrame extends Frame {
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
         }
+        //第二种删除飞出边界的子弹的方法
+        /*for (Iterator<Bullet> it = bullets.iterator(); it.hasNext();) {
+            Bullet b = it.next();
+            if (!b.live){
+                it.remove();
+            }
+        }*/
     }
 
     class MyKeyListener extends KeyAdapter {
