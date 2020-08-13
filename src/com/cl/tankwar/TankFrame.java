@@ -50,8 +50,9 @@ import java.util.List;
  * @Version: 1.0
  */
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(200, 200, Dir.DOWN, this);
-    List<Bullet> bullets = new ArrayList<Bullet>();
+    Tank myTank = new Tank(200, 400, Dir.DOWN, this);
+    List<Bullet> bullets = new ArrayList<>();
+    List<Tank> enemies = new ArrayList<>();
     Bullet b = new Bullet(300,300, Dir.DOWN, this);
     static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
 
@@ -91,6 +92,10 @@ public class TankFrame extends Frame {
         myTank.paint(g);
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
+        }
+
+        for (int i = 0; i < enemies.size(); i++) {
+            enemies.get(i).paint(g);
         }
         //第二种删除飞出边界的子弹的方法
         /*for (Iterator<Bullet> it = bullets.iterator(); it.hasNext();) {

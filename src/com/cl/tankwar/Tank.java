@@ -42,10 +42,13 @@ import java.awt.*;
  */
 public class Tank {
     private int x, y;
-    private Dir dir = Dir.DOWN;
+    private Dir dir;
     public static final int SPEED = 5;
+
+    public final static int WIDTH = ResourceMgr.tankD.getWidth();
+    public final static int HEIGHT = ResourceMgr.tankD.getHeight();
     private boolean moving = false;
-    private TankFrame tf = null;
+    private TankFrame tf;
 
     public Tank(int x, int y, Dir dir, TankFrame tf) {
         this.x = x;
@@ -93,7 +96,9 @@ public class Tank {
     }
 
     private void move() {
-        if (!moving) return;
+        if (!moving) {
+            return;
+        }
         switch (dir) {
             case LEFT:
                 x -= SPEED;
@@ -113,6 +118,8 @@ public class Tank {
     }
 
     public void fire() {
-        tf.bullets.add(new Bullet(this.x,this.y, this.dir, this.tf));
+        int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
+        int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
+        tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf));
     }
 }

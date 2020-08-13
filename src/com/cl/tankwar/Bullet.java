@@ -42,7 +42,8 @@ import java.awt.*;
  */
 public class Bullet {
     private static final int SPEED = 10;
-    private final static int WITDH = 30, HEIGHT = 30;
+    public final static int WIDTH = ResourceMgr.bulletD.getWidth();
+    public final static int HEIGHT = ResourceMgr.bulletD.getHeight();
 
     private int x, y;
     private Dir dir;
