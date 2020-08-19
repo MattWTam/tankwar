@@ -89,6 +89,12 @@ public class TankFrame extends Frame {
 
     @Override
     public void paint(Graphics g) {
+        Color c = g.getColor();
+        g.setColor(Color.YELLOW);
+        g.drawString("子弹的数量：" + bullets.size(), 10, 60);
+        g.drawString("敌人的数量：" + enemies.size(), 10, 75);
+        g.setColor(c);
+
         myTank.paint(g);
         for (int i = 0; i < bullets.size(); i++) {
             bullets.get(i).paint(g);
@@ -96,6 +102,13 @@ public class TankFrame extends Frame {
 
         for (int i = 0; i < enemies.size(); i++) {
             enemies.get(i).paint(g);
+        }
+
+        for (int i = 0; i < bullets.size(); i++) {
+            for (int j = 0; j < enemies.size(); j++) {
+                bullets.get(i).collideWith(enemies.get(j));
+            }
+
         }
         //第二种删除飞出边界的子弹的方法
         /*for (Iterator<Bullet> it = bullets.iterator(); it.hasNext();) {
