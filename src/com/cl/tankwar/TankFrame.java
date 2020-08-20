@@ -40,6 +40,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,11 +51,12 @@ import java.util.List;
  * @Version: 1.0
  */
 public class TankFrame extends Frame {
-    Tank myTank = new Tank(200, 400, Dir.DOWN, this);
+    Tank myTank = new Tank(200, 400, Dir.DOWN, Group.GOOD, this);
     List<Bullet> bullets = new ArrayList<>();
     List<Tank> enemies = new ArrayList<>();
-    Bullet b = new Bullet(300,300, Dir.DOWN, this);
-    static final int GAME_WIDTH = 800, GAME_HEIGHT = 600;
+    Explode e = new Explode(100, 100, this);
+
+    static final int GAME_WIDTH = 1080, GAME_HEIGHT = 960;
 
     public TankFrame() {
         setSize(GAME_WIDTH, GAME_HEIGHT);
@@ -108,7 +110,7 @@ public class TankFrame extends Frame {
             for (int j = 0; j < enemies.size(); j++) {
                 bullets.get(i).collideWith(enemies.get(j));
             }
-
+        e.paint(g);
         }
         //第二种删除飞出边界的子弹的方法
         /*for (Iterator<Bullet> it = bullets.iterator(); it.hasNext();) {

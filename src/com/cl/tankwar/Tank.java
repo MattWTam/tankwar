@@ -33,6 +33,7 @@
 package com.cl.tankwar;
 
 import java.awt.*;
+import java.util.Random;
 
 /**
  * @Author: Matt Ten
@@ -47,14 +48,18 @@ public class Tank {
 
     public final static int WIDTH = ResourceMgr.tankD.getWidth();
     public final static int HEIGHT = ResourceMgr.tankD.getHeight();
-    private boolean moving = false;
+
+    private Random random = new Random();
+    private boolean moving = true;
     private TankFrame tf;
     private boolean living = true;
+    private Group group = Group.BAD;
 
-    public Tank(int x, int y, Dir dir, TankFrame tf) {
+    public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
         this.y = y;
         this.dir = dir;
+        this.group = group;
         this.tf = tf;
     }
 
@@ -72,6 +77,14 @@ public class Tank {
 
     public void setY(int y) {
         this.y = y;
+    }
+
+    public Group getGroup() {
+        return group;
+    }
+
+    public void setGroup(Group group) {
+        this.group = group;
     }
 
     public boolean isMoving() {
@@ -135,12 +148,15 @@ public class Tank {
             default:
                 break;
         }
+        if (random.nextInt(10) > 5) {
+            this.fire();
+        }
     }
 
     public void fire() {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
-        tf.bullets.add(new Bullet(bX, bY, this.dir, this.tf));
+        tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
     }
 
     public void die() {
