@@ -46,8 +46,8 @@ public class Tank {
     private Dir dir;
     public static final int SPEED = 5;
 
-    public final static int WIDTH = ResourceMgr.tankD.getWidth();
-    public final static int HEIGHT = ResourceMgr.tankD.getHeight();
+    public final static int WIDTH = ResourceMgr.goodTankU.getWidth();
+    public final static int HEIGHT = ResourceMgr.goodTankU.getHeight();
 
     private Random random = new Random();
     private boolean moving = true;
@@ -107,18 +107,20 @@ public class Tank {
         if (!living) {
             tf.enemies.remove(this);
         }
+
+
         switch (dir) {
             case LEFT:
-                g.drawImage(ResourceMgr.tankL, x,y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankL : ResourceMgr.badTankL, x,y, null);
                 break;
             case UP:
-                g.drawImage(ResourceMgr.tankU, x,y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankU : ResourceMgr.badTankU, x,y, null);
                 break;
             case RIGHT:
-                g.drawImage(ResourceMgr.tankR, x,y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankR : ResourceMgr.badTankR, x,y, null);
                 break;
             case DOWN:
-                g.drawImage(ResourceMgr.tankD, x,y, null);
+                g.drawImage(this.group == Group.GOOD ? ResourceMgr.goodTankD : ResourceMgr.badTankD, x,y, null);
                 break;
             default:
                 throw new IllegalStateException("Unexpected value: " + dir);
@@ -166,6 +168,9 @@ public class Tank {
         int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
         int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
         tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
+        if (this.group == Group.GOOD) {
+            new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
+        }
     }
 
     public void die() {
