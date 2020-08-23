@@ -32,6 +32,7 @@
 
 package com.cl.tankwar;
 
+import javax.lang.model.element.VariableElement;
 import java.awt.*;
 
 /**
@@ -41,9 +42,11 @@ import java.awt.*;
  * @Version: 1.0
  */
 public class Bullet {
-    private static final int SPEED = 10;
+    private static final int SPEED = 6;
     public final static int WIDTH = ResourceMgr.bulletD.getWidth();
     public final static int HEIGHT = ResourceMgr.bulletD.getHeight();
+
+    Rectangle rect = new Rectangle();
 
     private int x, y;
     private Dir dir;
@@ -58,6 +61,11 @@ public class Bullet {
         this.dir = dir;
         this.group = group;
         this.tf = tf;
+
+        rect.x = this.x;
+        rect.y = this.y;
+        rect.width = WIDTH;
+        rect.height = HEIGHT;
     }
 
     public Group getGroup() {
@@ -109,6 +117,10 @@ public class Bullet {
                 break;
         }
 
+        //update rect
+        rect.x = this.x;
+        rect.y = this.y;
+
         if (x < 0 || y < 0 || x > TankFrame.GAME_WIDTH || y > TankFrame.GAME_HEIGHT) {
             living = false;
         }
@@ -119,11 +131,7 @@ public class Bullet {
             return;
         }
 
-        //TODO: 用一个rect来记录子弹的位置
-        Rectangle rect1 = new Rectangle(this.x, this.y, WIDTH, HEIGHT);
-        Rectangle rect2 = new Rectangle(tank.getX(), tank.getY(), Tank.WIDTH, Tank.HEIGHT);
-
-        if (rect1.intersects(rect2)) {
+        if (rect.intersects(tank.rect)) {
             tank.die();
             this.die();
             int eX = tank.getX() + Tank.WIDTH/2 - Explode.WIDTH/2;
