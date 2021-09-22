@@ -42,8 +42,8 @@ import java.util.Random;
  * @Version: 1.0
  */
 public class Tank {
-    private int x, y;
-    private Dir dir;
+    int x, y;
+    Dir dir;
     public static final int SPEED = 5;
 
     public final static int WIDTH = ResourceMgr.goodTankU.getWidth();
@@ -52,11 +52,11 @@ public class Tank {
 
     private Random random = new Random();
     private boolean moving = true;
-    private TankFrame tf;
+    TankFrame tf;
     private boolean living = true;
-    private Group group = Group.BAD;
+    Group group = Group.BAD;
 
-
+    FireStrategy fs;
 
     public Tank(int x, int y, Dir dir, Group group, TankFrame tf) {
         this.x = x;
@@ -69,6 +69,12 @@ public class Tank {
         rect.y = this.y;
         rect.width = WIDTH;
         rect.height = HEIGHT;
+
+        if (group == Group.GOOD) {
+            fs = new FourDirFireStrategy();
+        } else {
+            fs = new DefaultFireStrategy();
+        }
     }
 
     public int getX() {
@@ -194,12 +200,7 @@ public class Tank {
     }
 
     public void fire() {
-        int bX = this.x + Tank.WIDTH/2 - Bullet.WIDTH/2;
-        int bY = this.y + Tank.HEIGHT/2 - Bullet.HEIGHT/2;
-        tf.bullets.add(new Bullet(bX, bY, this.dir, this.group, this.tf));
-        if (this.group == Group.GOOD) {
-            new Thread(() -> new Audio("audio/tank_fire.wav").play()).start();
-        }
+        fs.fire(this);
     }
 
     public void die() {
